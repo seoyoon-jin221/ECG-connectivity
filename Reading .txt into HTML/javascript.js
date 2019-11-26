@@ -12,5 +12,5 @@ var txtFile = new XMLHttpRequest();
 
         document.getElementById('txt').innerHTML = allText;
     }
-    txtFile.open("GET", '/TestTXT.txt', true);
+    txtFile.open("GET", 'TestTXT.txt', true);
     txtFile.send(null);
