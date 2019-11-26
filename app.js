@@ -3,16 +3,16 @@ if (window.hyper && window.hyper.log) { console.log = hyper.log }
 
 document.addEventListener(
     'deviceready',
-    function() { 
+    function() {
         app.initialize();
     }
 );
 
 var app = {}
 
-app.SERVICE_UUID='0000ffe0-0000-1000-8000-00805f9b34fb';
-app.CHARACTERISTIC_UUID='0000ffe1-0000-1000-8000-00805f9b34fb';
-app.DEVICE_ADDRESS='94FA5DEC-0AC4-1C23-D78B-2682D43CAA83'
+app.SERVICE_UUID='00001101-0000-1000-8000-00805f9b34fb';
+app.CHARACTERISTIC_UUID='00001101-0000-1000-8000-00805f9b34fb';
+//app.DEVICE_ADDRESS='94FA5DEC-0AC4-1C23-D78B-2682D43CAA83'
 
 app.initialize = function()
 {
@@ -34,16 +34,16 @@ function scanSuccess(device)
     if(device.name != null)
     {
         console.log('Found' + ' ' + count + ' ' + device.name);
-        
+
         console.log('Device Address: ' + device.address);
-        
-        
+
+
 
        if (device.address = app.DEVICE_ADDRESS) {
         device.connect(connectSuccess,connectFailure);
         evothings.easyble.stopScan();
        }
-        
+
     }
 }
 
@@ -56,7 +56,7 @@ function connectSuccess(device)
 {
     console.log('Successfully connected!!');
     app.connected = true;
-    app.device = device; 
+    app.device = device;
     app.device.readServices(serviceSuccess, serviceFailure, [ app.SERVICE_UUID]);
 }
 
@@ -81,7 +81,7 @@ app.disconnect = function(errorMessage)
     app.showStart();
     document.getElementById('controlsView').style.setProperty('display', 'none');
     document.getElementById('startView').style.setProperty('display', 'block');
-    
+
 }
 
 function serviceSuccess(device)
@@ -146,7 +146,7 @@ app.receivedData = function(data)
 {
     //0X16
     if(data == 0x16)
-    {    //vibrate the phone, change the color of button, .... 
+    {    //vibrate the phone, change the color of button, ....
     }
 }
 
@@ -163,69 +163,6 @@ app.showStart = function()
     $('#disconnect').prop('disabled', true);
     $('#startView').show();
     $('#controlsView').hide();
-}
-
-app.displayServoAngle = function() {
-    
-}
-
-app.increaseServoAngle = function() {
-    app.sendData(new Uint8Array([1]));
-}
-
-app.decreaseServoAngle = function() {
-    app.sendData(new Uint8Array([0]));
-}
-
-app.stopServoAngle = function() {
-    app.sendData(new Uint8Array([2]))
-}
-
-
-function rotateStepper(angle) {
-    if (angle > 0) {
-        app.sendData([0, angle]);
-    } 
-    else if (angle < 0) {
-        app.sendData([1, -angle]);
-    }    
-}
-
-function setHeight(height) {
-    app.sendData([2, height]);
-
-}
-
-function setDistance(distance) {
-    app.sendData([3, distance * 3]);
-}
-
-function setClaw(grasp) {
-    app.sendData([4, grasp]);
-}
-
-function openClaw() {
-    setClaw(0);
-}
-
-function closeClaw() {
-    setClaw(90);
-}
-
-function stepCloseClaw() {
-    app.sendData([5]);
-}
-
-function stepIncreaseDistance() {
-    app.sendData([6]);
-}
-
-function stepDecreaseDistance() {
-    app.sendData([7]);
-}
-
-function stepIncreaseHeight() {
-    app.sendData([8]);
 }
 
 function stepDecreaseHeight() {

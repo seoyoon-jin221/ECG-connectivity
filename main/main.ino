@@ -39,5 +39,6 @@ void loop() {
   if (Serial.available())
     mySerial.write(Serial.read());
   */
-  //To Do: send bluetooth signal to bluetooth as did to computer
+  mySerial.write(vOut);
+
 }
