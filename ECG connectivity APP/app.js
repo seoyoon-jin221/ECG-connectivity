@@ -28,6 +28,11 @@ app.connect = function()
     evothings.easyble.startScan(scanSuccess,scanFailure, {serviceUUIDS : [app.SERVICE_UUID]}, { allowDuplicates: true});
 }
 
+app.stopScan = function()
+{
+    evothings.easyble.stopScan();
+}
+
 var count = 0;
 function scanSuccess(device)
 {
@@ -36,8 +41,6 @@ function scanSuccess(device)
         console.log('Found' + ' ' + count + ' ' + device.name);
 
         console.log('Device Address: ' + device.address);
-
-
 
        if (device.address = app.DEVICE_ADDRESS) {
         device.connect(connectSuccess,connectFailure);
@@ -78,17 +81,14 @@ app.disconnect = function(errorMessage)
 
     evothings.easyble.stopScan();
     evothings.easyble.closeConnectedDevices();
-    app.showStart();
-    document.getElementById('controlsView').style.setProperty('display', 'none');
-    document.getElementById('startView').style.setProperty('display', 'block');
-
+    bluetoothControl.showStart();
+    
 }
 
 function serviceSuccess(device)
 {
     console.log('The bluetooth module can now read and write');
-    document.getElementById('controlsView').style.setProperty('display', 'block');
-    document.getElementById('startView').style.setProperty('display', 'none');
+    bluetoothControl.showControl();
     app.device.writeCharacteristic(
         app.SERVICE_UUID,
         function()
@@ -151,20 +151,4 @@ app.receivedData = function(data)
 }
 
 
-app.showControls = function()
-{
-    $('#disconnect').prop('disabled', false);
-    $('#startView').hide();
-    $('#controlsView').show();
-}
 
-app.showStart = function()
-{
-    $('#disconnect').prop('disabled', true);
-    $('#startView').show();
-    $('#controlsView').hide();
-}
-
-function stepDecreaseHeight() {
-    app.sendData([9]);
-}
