@@ -8,14 +8,11 @@ function showStart() {
     document.getElementById('startView').style.setProperty('display', 'block');
 }
 
-function bluetoothControl() {
-    
-}
 
 window.onload = function () {
     var name = document.getElementById('deviceName');
-    name.innerText = app.device.name;
-
+    //name.innerText = app.device.name;
+    
     var dps = []; // dataPoints
     var chart = new CanvasJS.Chart("chartContainer", {
         title :{
@@ -57,5 +54,4 @@ window.onload = function () {
     
     updateChart(dataLength);
     setInterval(function(){updateChart()}, updateInterval);
-    
 }
