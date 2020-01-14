@@ -10,9 +10,9 @@ document.addEventListener(
 
 var app = {}
 
-app.SERVICE_UUID='00001101-0000-1000-8000-00805f9b34fb';
-app.CHARACTERISTIC_UUID='00001101-0000-1000-8000-00805f9b34fb';
-//app.DEVICE_ADDRESS='94FA5DEC-0AC4-1C23-D78B-2682D43CAA83'
+app.SERVICE_UUID='00001101-0000-1000-8000-00805F9B34FB';
+app.CHARACTERISTIC_UUID='00001101-0000-1000-8000-00805F9B34FB';
+app.DEVICE_ADDRESS='94FA5DEC-0AC4-1C23-D78B-2682D43CAA83'
 
 app.initialize = function()
 {
@@ -33,16 +33,16 @@ app.stopScan = function()
     evothings.easyble.stopScan();
 }
 
-var count = 0;
 function scanSuccess(device)
 {
     if(device.name != null)
     {
-        console.log('Found' + ' ' + count + ' ' + device.name);
+         console.log('Found' + ' ' + device.name);
+         console.log(device.version);
+         console.log('Device Service UUID: ' + device.uuid);
 
-        console.log('Device Address: ' + device.address);
-
-       if (device.address = app.DEVICE_ADDRESS) {
+       if (device.name == 'HC-05') {
+         console.log('Found bluetooth');
         device.connect(connectSuccess,connectFailure);
         evothings.easyble.stopScan();
        }
@@ -82,7 +82,7 @@ app.disconnect = function(errorMessage)
     evothings.easyble.stopScan();
     evothings.easyble.closeConnectedDevices();
     bluetoothControl.showStart();
-    
+
 }
 
 function serviceSuccess(device)
@@ -149,6 +149,3 @@ app.receivedData = function(data)
     {    //vibrate the phone, change the color of button, ....
     }
 }
-
-
-

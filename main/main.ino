@@ -13,7 +13,7 @@
 
 SoftwareSerial mySerial(2, 3); // RX, TX
 
-
+int t = 0;
 int pin = A0;
 
 void setup() {
@@ -39,6 +39,6 @@ void loop() {
   if (Serial.available())
     mySerial.write(Serial.read());
   */
+  mySerial.write(t++);
   mySerial.write(vOut);
-
 }
