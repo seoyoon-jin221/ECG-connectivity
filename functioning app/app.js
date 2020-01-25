@@ -156,9 +156,6 @@ app.receivedData = function(data)
 
         console.log(value);
         graph.updateChart(value);
-        // TODO: change the following line to set yvalue and update the graph
-        // recommended: you can make a function to make changes to the graph
-        //$( '#analogDigitalResult').text(value);
       };
     }
   else

@@ -13,7 +13,6 @@ var graph = {};
 graph.initialize = function() {
   graph.dps = [];
   graph.xVal = 0;
-  graph.updateInterval = 100;
   graph.dataLength = 100;
   graph.chart = new CanvasJS.Chart("chartContainer", {
       title :{
@@ -30,8 +29,7 @@ graph.initialize = function() {
 }
 
 graph.updateChart = function(yVal) {
-  this.pushYval(this.dataLength);
-  setInterval(function(){this.pushYval()}, this.updateInterval);
+  this.pushYval(this.dataLength, yVal);
 }
 
 graph.pushYval = function(count, yVal) {
