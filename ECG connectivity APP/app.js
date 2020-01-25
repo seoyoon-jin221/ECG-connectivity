@@ -5,14 +5,15 @@ document.addEventListener(
     'deviceready',
     function() {
         app.initialize();
+        //graph.initialize();
     }
 );
 
-var app = {}
+var app = {};
 
-app.SERVICE_UUID='00001101-0000-1000-8000-00805F9B34FB';
-app.CHARACTERISTIC_UUID='00001101-0000-1000-8000-00805F9B34FB';
-app.DEVICE_ADDRESS='94FA5DEC-0AC4-1C23-D78B-2682D43CAA83'
+app.SERVICE_UUID='0000ffe0-0000-1000-8000-00805f9b34fb';
+app.CHARACTERISTIC_UUID='0000ffe1-0000-1000-8000-00805f9b34fb';
+// app.DEVICE_ADDRESS='94FA5DEC-0AC4-1C23-D78B-2682D43CAA83'
 
 app.initialize = function()
 {
@@ -38,10 +39,8 @@ function scanSuccess(device)
     if(device.name != null)
     {
          console.log('Found' + ' ' + device.name);
-         console.log(device.version);
-         console.log('Device Service UUID: ' + device.uuid);
 
-       if (device.name == 'HC-05') {
+       if (device.name == 'DSD TECH') {
          console.log('Found bluetooth');
         device.connect(connectSuccess,connectFailure);
         evothings.easyble.stopScan();
@@ -61,6 +60,7 @@ function connectSuccess(device)
     app.connected = true;
     app.device = device;
     app.device.readServices(serviceSuccess, serviceFailure, [ app.SERVICE_UUID]);
+    showControl();
 }
 
 function connectFailure()
@@ -81,14 +81,14 @@ app.disconnect = function(errorMessage)
 
     evothings.easyble.stopScan();
     evothings.easyble.closeConnectedDevices();
-    bluetoothControl.showStart();
+    showStart();
 
 }
 
 function serviceSuccess(device)
 {
     console.log('The bluetooth module can now read and write');
-    bluetoothControl.showControl();
+    showControl();
     app.device.writeCharacteristic(
         app.SERVICE_UUID,
         function()
@@ -144,8 +144,23 @@ app.sendData = function(data)
 
 app.receivedData = function(data)
 {
-    //0X16
-    if(data == 0x16)
-    {    //vibrate the phone, change the color of button, ....
+    if (app.connected)
+    {
+      var data = new Uint8Array(data);
+      console.log(data);
+      if (data[0] === 0xAD)
+      {
+        console.log('Data received: [' + data[0] +', ' + data[1] +', ' + data[2] + ']');
+
+        var value = (data[2] << 8) | data[1];
+
+        console.log(value);
+        graph.updateChart(value);
+      };
     }
+  else
+  {
+    app.disconnect('Disconnected');
+    console.log('Error - No device connected.');
+  }
 }

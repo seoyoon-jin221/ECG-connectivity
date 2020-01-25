@@ -1,6 +1,8 @@
 function showControl() {
     document.getElementById('controlsView').style.setProperty('display', 'block');
     document.getElementById('startView').style.setProperty('display', 'none');
+    graph.initialize();
+    graph.updateChart(3);
 }
 
 function showStart() {
@@ -8,11 +10,48 @@ function showStart() {
     document.getElementById('startView').style.setProperty('display', 'block');
 }
 
+var graph = {};
+graph.initialize = function() {
+  graph.dps = [];
+  graph.xVal = 0;
+  graph.dataLength = 100;
+  graph.chart = new CanvasJS.Chart("chartContainer", {
+      title :{
+          text: "Dynamic Data"
+      },
+      axisY: {
+          includeZero: false
+      },
+      data: [{
+          type: "line",
+          dataPoints: graph.dps
+      }]
+   });
+}
 
-window.onload = function () {
-    var name = document.getElementById('deviceName');
-    //name.innerText = app.device.name;
+graph.updateChart = function(yVal) {
+  graph.pushYval(graph.dataLength, yVal);
+}
 
+graph.pushYval = function(count, yVal) {
+  count = count || 1;
+
+  for (var j = 0; j < count; j++) {
+      graph.dps.push({
+          x: graph.xVal,
+          y: yVal
+      });
+      graph.xVal++;
+  }
+
+  if (graph.dps.length > dataLength) {
+      graph.dps.shift();
+  }
+
+  graph.chart.render();
+}
+
+function graphDisplay() {
     var dps = []; // dataPoints
     var chart = new CanvasJS.Chart("chartContainer", {
         title :{
@@ -37,12 +76,12 @@ window.onload = function () {
         count = count || 1;
 
         for (var j = 0; j < count; j++) {
-            //yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+            yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
             dps.push({
                 x: xVal,
                 y: yVal
             });
-            //xVal++;
+            xVal++;
         }
 
         if (dps.length > dataLength) {
