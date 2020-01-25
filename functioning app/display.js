@@ -9,11 +9,49 @@ function showStart() {
     document.getElementById('startView').style.setProperty('display', 'block');
 }
 
+var graph = {};
+graph.dps = [];
+graph.xVal = 0;
+graph.updateInterval = 100;
+graph.dataLength = 100;
+graph.chart = new CanvasJS.Chart("chartContainer", {
+    title :{
+        text: "Dynamic Data"
+    },
+    axisY: {
+        includeZero: false
+    },
+    data: [{
+        type: "line",
+        dataPoints: this.dps
+    }];
+
+graph.updateChart = function(yVal) {
+  this.pushYval(this.dataLength);
+  setInterval(function(){this.pushYval()}, this.updateInterval);
+}
+
+graph.pushYval = function(count, yVal) {
+  count = count || 1;
+
+  for (var j = 0; j < count; j++) {
+      this.dps.push({
+          x: this.xVal,
+          y: yVal
+      });
+      this.xVal++;
+  }
+
+  if (this.dps.length > dataLength) {
+      this.dps.shift();
+  }
+
+  this.chart.render();
+}
+
+
 
 function graphDisplay() {
-    var name = document.getElementById('deviceName');
-    //name.innerText = app.device.name;
-
     var dps = []; // dataPoints
     var chart = new CanvasJS.Chart("chartContainer", {
         title :{

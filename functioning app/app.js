@@ -8,7 +8,7 @@ document.addEventListener(
     }
 );
 
-var app = {}
+var app = {};
 
 app.SERVICE_UUID='0000ffe0-0000-1000-8000-00805f9b34fb';
 app.CHARACTERISTIC_UUID='0000ffe0-0000-1000-8000-00805f9b34fb';
