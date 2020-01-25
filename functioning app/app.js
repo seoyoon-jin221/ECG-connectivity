@@ -5,6 +5,7 @@ document.addEventListener(
     'deviceready',
     function() {
         app.initialize();
+        graph.intialize():
     }
 );
 
@@ -154,7 +155,7 @@ app.receivedData = function(data)
         var value = (data[2] << 8) | data[1];
 
         console.log(value);
-
+        graph.updateChart(value);
         // TODO: change the following line to set yvalue and update the graph
         // recommended: you can make a function to make changes to the graph
         //$( '#analogDigitalResult').text(value);

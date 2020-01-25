@@ -10,21 +10,24 @@ function showStart() {
 }
 
 var graph = {};
-graph.dps = [];
-graph.xVal = 0;
-graph.updateInterval = 100;
-graph.dataLength = 100;
-graph.chart = new CanvasJS.Chart("chartContainer", {
-    title :{
-        text: "Dynamic Data"
-    },
-    axisY: {
-        includeZero: false
-    },
-    data: [{
-        type: "line",
-        dataPoints: this.dps
-    }];
+graph.initialize = function() {
+  graph.dps = [];
+  graph.xVal = 0;
+  graph.updateInterval = 100;
+  graph.dataLength = 100;
+  graph.chart = new CanvasJS.Chart("chartContainer", {
+      title :{
+          text: "Dynamic Data"
+      },
+      axisY: {
+          includeZero: false
+      },
+      data: [{
+          type: "line",
+          dataPoints: this.dps
+      }];
+   });
+}
 
 graph.updateChart = function(yVal) {
   this.pushYval(this.dataLength);
@@ -48,8 +51,6 @@ graph.pushYval = function(count, yVal) {
 
   this.chart.render();
 }
-
-
 
 function graphDisplay() {
     var dps = []; // dataPoints
