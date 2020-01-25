@@ -38,7 +38,7 @@ function scanSuccess(device)
     if(device.name != null)
     {
          console.log('Found' + ' ' + device.name);
-        
+
        if (device.name == 'DSD TECH') {
          console.log('Found bluetooth');
         device.connect(connectSuccess,connectFailure);
@@ -143,8 +143,28 @@ app.sendData = function(data)
 
 app.receivedData = function(data)
 {
-    //0X16
-    if(data == 0x16)
-    {    //vibrate the phone, change the color of button, ....
+    if (app.connected)
+    {
+      var data = new Uint8Array(data);
+
+      if (data[0] === 0xAD)
+      {
+        console.log('Data received: [' + data[0] +', ' + data[1] +', ' + data[2] + ']');
+
+        var value = (data[2] << 8) | data[1];
+
+        console.log(value);
+
+        // TODO: change the following line to set yvalue and update the graph
+        // recommended: you can make a function to make changes to the graph
+        //$( '#analogDigitalResult').text(value);
+      };
     }
+  else
+  {
+    app.disconnect('Disconnected');
+
+
+    console.log('Error - No device connected.');
+  }
 }
