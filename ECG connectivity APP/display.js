@@ -2,7 +2,6 @@ function showControl() {
     document.getElementById('controlsView').style.setProperty('display', 'block');
     document.getElementById('startView').style.setProperty('display', 'none');
     graph.initialize();
-    graph.updateChart(3);
 }
 
 function showStart() {
@@ -10,11 +9,12 @@ function showStart() {
     document.getElementById('startView').style.setProperty('display', 'block');
 }
 
+
 var graph = {};
 graph.initialize = function() {
   graph.dps = [];
   graph.xVal = 0;
-  graph.dataLength = 100;
+  graph.dataLength = 10;
   graph.chart = new CanvasJS.Chart("chartContainer", {
       title :{
           text: "Dynamic Data"
@@ -30,26 +30,19 @@ graph.initialize = function() {
 }
 
 graph.updateChart = function(yVal) {
-  graph.pushYval(graph.dataLength, yVal);
-}
-
-graph.pushYval = function(count, yVal) {
-  count = count || 1;
-
-  for (var j = 0; j < count; j++) {
       graph.dps.push({
           x: graph.xVal,
           y: yVal
       });
       graph.xVal++;
-  }
 
-  if (graph.dps.length > dataLength) {
+
+  if (graph.dps.length > graph.dataLength) {
       graph.dps.shift();
   }
 
   graph.chart.render();
-}
+  }
 
 function graphDisplay() {
     var dps = []; // dataPoints
@@ -94,3 +87,9 @@ function graphDisplay() {
     updateChart(dataLength);
     setInterval(function(){updateChart()}, updateInterval);
 }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+showControl();
