@@ -146,7 +146,6 @@ app.receivedData = function(data)
     if (app.connected)
     {
       var data = new Uint8Array(data);
-      console.log(data);
       if (data[0] === 0xAD)
       {
         console.log('Data received: [' + data[0] +', ' + data[1] +', ' + data[2] + ']');
