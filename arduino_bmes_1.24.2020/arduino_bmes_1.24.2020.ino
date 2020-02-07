@@ -18,11 +18,10 @@ void loop() {
     (byte)(randNumber),
     (byte)(randNumber >> 8)
   };
-  Serial.write(buffer, sizeof(buffer));
+  Serial.print(randNumber);
   mySerial.write(buffer, sizeof(buffer));
 
 if (mySerial.available()){
   byte cmd = Serial.read();
-}
 }
 }
