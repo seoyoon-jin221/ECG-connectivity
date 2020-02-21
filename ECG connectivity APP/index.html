@@ -23,9 +23,9 @@
 
 		<h1 style="text-align:center;">Arduino Bluetooth Testing App</h1>
 
-		<button id="scan" class="green wide" onclick="app.connect()" >Scan Bluetooth</button>
+		<button id="scan"  onclick="app.connect()" >Scan Bluetooth</button>
 
-		<button id='stopScan' class='red wide' onclick='app.stopScan()'>Stop Scan</button>
+		<button id='stopScan'  onclick='app.stopScan()'>Stop Scan</button>
 	</div>
 
 	<!-- CONTROL PANEL -->
@@ -33,6 +33,7 @@
 		<h1>Bluetooth Connected</h1>
 		<p id='deviceName'></p>
 		<div id="chartContainer" style="height: 370px; width:100%;"></div>
+		<button id='disconnect' onclick='app.disconnect()'>Disconnect</button>
 
 	</div>
 

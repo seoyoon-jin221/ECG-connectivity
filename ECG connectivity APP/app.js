@@ -142,7 +142,6 @@ app.sendData = function(data)
 
 app.receivedData = function(data)
 {
-    console.log('receieved data!');
     if (app.connected)
     {
       var data = new Uint8Array(data);
